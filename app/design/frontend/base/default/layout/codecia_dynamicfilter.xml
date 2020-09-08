@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<layout>
+    <cms_index_index>
+        <reference name="head">
+            <action method="addItem" ifconfig="codecia_dynamicfilter/settings/active"><type>skin_css</type><name>codecia_dynamicfilter/css/cc-dynamicfilter.css</name></action>
+            <action method="addItem" ifconfig="codecia_dynamicfilter/settings/active"><type>skin_js</type><name>codecia_dynamicfilter/js/cc-dynamicfilter-home.js</name></action>
+        </reference>
+    </cms_index_index>
+
+    <catalog_category_view>
+        <reference name="head">
+            <action method="addItem" ifconfig="codecia_dynamicfilter/settings/active"><type>skin_css</type><name>codecia_dynamicfilter/css/cc-dynamicfilter.css</name></action>
+            <action method="addItem" ifconfig="codecia_dynamicfilter/settings/active"><type>skin_js</type><name>codecia_dynamicfilter/js/cc-dynamicfilter-category.js</name></action>
+        </reference>
+    </catalog_category_view>
+</layout>

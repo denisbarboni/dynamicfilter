@@ -1,0 +1,177 @@
+#dynamicFilter {
+    background: linear-gradient(to right, #008cdd 0%, #233977 100%);
+    border-radius: 5px;
+}
+.cc-dynamic-filter .cc-filters-grid {
+    display: inline-block;
+}
+.cc-dynamic-filter {
+    margin-top: 25px;
+}
+.cc-dynamic-filter-title {
+    margin-top: 20px;
+    padding: 10px;
+    height: 65px;
+    position: relative;
+}
+.cc-dynamic-filter-title span{
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+}
+.cc-dynamic-filter-title .img-search{
+    margin: 0 0 10px 10px;
+}
+.cc-dynamic-filter-title .ajax-request{
+    margin-right: 10px;
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 5px;
+}
+.cc-dynamic-filter button.cc-btn-filter, .cc-dynamic-filter button.cc-btn-clean-filters {
+    float: right;
+}
+.cc-dynamic-filter button.cc-btn-filter {
+    top: -30px;
+}
+.cc-dynamic-filter button.cc-btn-clean-filters {
+    top: 20px;
+}
+#dynamicFilter .cc-actions {
+    display: flex;
+    flex-direction: row;
+    text-align: right;
+}
+#dynamicFilter .cc-actions > div{
+    width: 100%;
+    text-align: center;
+}
+#dynamicFilter .cc-actions > .showMore{
+    display: none;
+}
+#dynamicFilter .cc-actions button {
+    width: 150px;
+}
+.cc-dynamic-filter a.cc-btn-more {
+    cursor: pointer;
+    font-weight: bold;
+}
+.cc-dynamic-filter .cc-filter-select {
+    float: left;
+}
+.cc-dynamic-filter .cc-filter-select .cc-select-border > label {
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    font-size: 13px;
+    color: #7b7b7b;
+    font-family: sans-serif;
+    margin: unset;
+}
+.cc-dynamic-filter .cc-filter-select .cc-select-border > select {
+    padding: 0 5px;
+    border: unset;
+    background: url(../images/down-arrow.svg) no-repeat;
+    background-size: 11px;
+    font-size: 13px;
+    color: #555;
+    background-position: right;
+    width: 97%;
+}
+.cc-dynamic-filter .cc-filter-select .cc-select-border {
+    border: 1px solid #d6d6d6;
+    border-radius: 2px;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    position: relative;
+}
+.cc-dynamic-filter .cc-more {
+    display: none;
+}
+#dynamicFilter .cc-minus-filter:before {
+    content: "-";
+    font-weight: bold;
+    padding-bottom: 2px;
+    font-size: 16px;
+}
+#dynamicFilter .cc-plus-filter:before {
+    content: "+";
+    font-weight: bold;
+    padding-bottom: 3px;
+    font-size: 16px;
+}
+#dynamicFilter .cc-btn-more:before {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+#dynamicFilter .seta-cima:before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #000000;
+}
+#dynamicFilter .seta-baixo:before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #000000;
+}
+#dynamicFilter .loading-request:before{
+    content: "";
+    opacity: 0.3;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    position: absolute;
+}
+@media only screen and (min-width: 768px) {
+
+    .cc-dynamic-filter .cc-filters-grid {
+        width: 100%;
+    }
+    .cc-dynamic-filter .cc-filter-select {
+        width: 30%;
+        margin: 0 1.5% 24px 1.5%;
+    }
+    .cc-actions .cc-btn-filter {
+        margin: 0 20px 20px 0;
+    }
+}
+@media only screen and (max-width: 767px) {
+
+    .cc-dynamic-filter .cc-filters-grid {
+        width: 100%;
+    }
+    .cc-dynamic-filter .cc-filter-select {
+        width: 90%;
+        margin: 0 5% 24px 5%;
+    }
+    .cc-dynamic-filter button.cc-btn-filter, .cc-dynamic-filter button.cc-btn-clean-filters {
+        width: 62px;
+        padding: unset;
+        height: 30px;
+    }
+    .cc-dynamic-filter-title {
+        text-align: center;
+    }
+    .cc-actions .btn-search{
+        /*display: flex;*/
+        /*flex-direction: column;*/
+        /*align-items: center;*/
+    }
+    .cc-actions button {
+        margin-bottom: 10px;
+    }
+}
+
+
+.teste_hidden{
+    display: none !important;
+}

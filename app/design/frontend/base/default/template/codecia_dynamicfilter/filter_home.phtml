@@ -1,0 +1,153 @@
+<?php /** @var Codecia_Dynamicfilter_Block_Filterhome $this */ ?>
+<?php
+$attributes_config = explode(',', Mage::getStoreConfig('codecia_dynamicfilter/settings/filters'));
+
+if(Mage::getStoreConfigFlag('codecia_dynamicfilter/settings/filters')):?>
+
+<div id="dynamicFilter" class="center">
+    <div class="cc-dynamic-filter-title">
+        <span><?php echo Mage::getStoreConfig('codecia_dynamicfilter/frontend/title'); ?> Denis</span>
+        <img class="img-search" src="../skin/frontend/base/default/codecia_dynamicfilter/images/research.svg" title="<?php echo Mage::getStoreConfig('codecia_dynamicfilter/frontend/title'); ?>" width="25" height="25">
+        <img class="ajax-request" src="../skin/frontend/base/default/codecia_dynamicfilter/images/ajax-request.svg" alt="LOADING..." width="45" height="45">
+    </div>
+    <div class="cc-dynamic-filter">
+        <div class="cc-filters-grid">
+            <?php foreach($attributes_config as $code_attribute): ?>
+                <div class="cc-filter-select <?php if (count($attributes_config) > 6): ?>cc-more<?php endif; ?>" id="<?php echo 'attr_'.$code_attribute ?>">
+                    <?php echo $this->getHtmlOptions($code_attribute); ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="cc-actions">
+        <div class="showMore">
+            <a class="cc-btn-more cc-plus-filter" style="<?php if(!($i <= 6)): ?>display: none;<?php endif; ?>">Filtros</a>
+        </div>
+        <div class="btn-search">
+            <?php if ($_SERVER['REQUEST_URI'] == '/'): ?>
+                <button class="cc-btn-clean-filters">Limpar Filtros</button>
+                <button class="cc-btn-filter">Buscar</button>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+<script type="application/javascript">
+    $j = jQuery.noConflict();
+    $j(document).ready(function () {
+
+        $j('.cc-btn-filter').on('click', function () {
+
+            var url_base = '<?php echo Mage::getBaseUrl(); ?>';
+            var url_attributes = '';
+            var isValueCategoryId = false;
+            $j('.select_dynamicfilter').each(function () {
+
+                if (this.id == 'select_filter_category_id') {
+                    if (this.value){
+                        var patch_category = $j('#select_filter_category_id').find(":selected").attr('data-url');
+                        console.log('patch_category', patch_category);
+                        if (patch_category){
+                            url_attributes = url_base + patch_category+'?';
+                        }else{
+                            url_attributes = url_base + 'dynamic-filter.html?';
+                        }
+                    }else{
+                        url_attributes = url_base + 'dynamic-filter.html?';
+                    }
+                }
+
+                if (this.id == 'select_filter_sub_category_id') {
+                    if (this.value){
+                        var patch_subcategory = $j('#select_filter_sub_category_id').find(":selected").attr('data-url');
+                        console.log('patch_subcategory', patch_subcategory);
+                        if (patch_subcategory){
+                            url_attributes = url_base + patch_subcategory+'?';
+                        }else{
+                            url_attributes = url_base + 'dynamic-filter.html?';
+                        }
+                    }else{
+                        url_attributes = url_base + 'dynamic-filter.html?';
+                    }
+                }
+
+                if (this.value && (this.id !== 'select_filter_category_id' && this.id !== 'select_filter_sub_category_id')){
+                    var el = $j('#'+this.id);
+                    url_attributes += el.attr('data-attr') + '=' + this.value + '&';
+                }
+            });
+
+            window.location.href = url_attributes;
+            console.log('url_attributes', url_attributes);
+        });
+
+
+       $j('.select_dynamicfilter').on('change', function () {
+
+           var prevElement = $j('#'+this.id).prev();
+
+           console.log('prevElement.text()', prevElement.text());
+           if (!prevElement.text()){
+               prevElement.text($j('#'+this.id).attr('data-name'));
+           }else{
+               prevElement.text('');
+           }
+
+           var filters = {};
+           $j('.select_dynamicfilter').each(function () {
+               filters[this.id] = this.value;
+           });
+
+           if (this.id == 'select_filter_category_id') {
+                //trazer apenas as sub da categoria selecionada.
+                var urlSub = '/dynamicfilter/filter/filtersubcategories/';
+                $j.ajax({
+                    type: "POST",
+                    url: urlSub,
+                    dataType: "json",
+                    data: {"category_id": this.value},
+                    success: function(response){
+                        if (response.html){
+                            $j('#select_filter_sub_category_id').prev().text('');
+                            $j('#select_filter_sub_category_id').html(response.html);
+                        }
+                    }
+                });
+           }
+
+           var url = '/dynamicfilter/filter/filterattributes/';
+           $j.ajax({
+               type: "POST",
+               url: url,
+               dataType: "json",
+               data: {"values": JSON.stringify(filters)},
+               success: function(response){
+
+                   var selectFilters = response.select_filter;
+                   var filterWithoutResult = response.filter_without_result;
+                   console.log('response', response);
+
+                   console.log('selectFilters', selectFilters);
+
+                   $j.each(selectFilters, function(id_attr, value) {
+                       console.log('id', id_attr);
+                       console.log('value', value);
+                       $j('#attr_'+id_attr).fadeIn(500);
+                       $j('#select_filter_'+id_attr).html(value);
+                   });
+                   console.log('filterWithoutResult', filterWithoutResult);
+
+                   $j.each(filterWithoutResult, function(id_attr, value) {
+                       $j('#attr_'+id_attr).fadeOut(500);
+                   });
+               }
+           });
+
+           // console.log('filters', filters);
+           // console.log('eventTipe', this.id);
+           // console.log('eventValue', this.value);
+       });
+
+    });
+</script>

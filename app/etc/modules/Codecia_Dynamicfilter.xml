@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <modules>
+        <Codecia_Dynamicfilter>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Codecia_Dynamicfilter>
+    </modules>
+</config>
